@@ -1,84 +1,68 @@
 'use client'
-import React, { useReducer, useState } from 'react';
+import 'regenerator-runtime/runtime';
+import React, { useState } from 'react';
 import classNames from 'classnames';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+
 import './VoiceToy.css'
 
-enum Action {
+enum RecordState {
     Pause = 'pause',
     Stop = 'stop',
     Recording = 'recording',
 }
 
-type State = {
-    isRecording: boolean;
-    isFinished: boolean;
-}
-
-type ActionType = { type: Action };
-const reducer = (state: State, action: ActionType): State => {
-    switch (action.type) {
-        case Action.Pause: {
-            return {
-                isRecording: false,
-                isFinished: false
-            }
-        };
-        case Action.Stop: {
-            return {
-                isRecording: false,
-                isFinished: true
-            }
-        };
-        case Action.Recording: {
-            return {
-                isRecording: true,
-                isFinished: false
-            }
-        }
-        default: return state;
-    }
-}
-
-const initialState = {
-    isRecording: false,
-    isFinished: true
-}
 export const VoiceToy: React.FC = () => {
-    const [curState, setCurState] =  useState<Action>(Action.Stop)
+    const [curState, setCurState] = useState<RecordState>(RecordState.Stop)
+    const {
+        transcript,
+        listening,
+        resetTranscript,
+        browserSupportsSpeechRecognition
+    } = useSpeechRecognition();
 
-    const handleRecordButton = () => {
-        if (curState === Action.Recording) {
-            setCurState(Action.Pause)
+    const handleRecordButton = async () => {
+        if(curState === RecordState.Stop){
+            resetTranscript();
+        }
+        if (curState === RecordState.Recording) {
+            setCurState(RecordState.Pause)
+            SpeechRecognition.stopListening();
             return;
         }
-        setCurState(Action.Recording)
+        setCurState(RecordState.Recording)
+        SpeechRecognition.startListening({
+            continuous: true,
+            language: 'en-US'
+        });
     }
 
     const handleStopButton = () => {
-        setCurState(Action.Stop)
+        SpeechRecognition.abortListening();
+        setCurState(RecordState.Stop)
     }
 
-    const recordButtonText = curState === Action.Recording ? 'Pause' : 'Record';
+    const recordButtonText = curState === RecordState.Recording ? 'Pause' : 'Record';
     const recordButtonCls = classNames({
         button: true,
-        'bg-amber-500': curState === Action.Recording,
-        'bg-lime-400': curState !== Action.Recording,
+        'bg-amber-500': curState === RecordState.Recording,
+        'bg-lime-400': curState !== RecordState.Recording,
     });
 
     const stopButtonCls = classNames({
         button: true,
-        'bg-gray-500': curState === Action.Stop,
-        'bg-red-500': curState !== Action.Stop,
+        'bg-gray-500': curState === RecordState.Stop,
+        'bg-red-500': curState !== RecordState.Stop,
     });
 
-    const isStopDisabled = curState === Action.Stop
+    const isStopDisabled = curState === RecordState.Stop
 
     return <div className='border border-gray-400 rounded-md w-3/4 h-full p-12'>
         <div className='border border-gray-400 rounded-md h-4/5 p-4'>
-            text here
+            {transcript}
         </div>
-
         <div className='flex justify-between mt-6'>
+            {listening ? 'listening' : 'nothing'}
             <button onClick={handleRecordButton} className={recordButtonCls}>{recordButtonText}</button>
             <button onClick={handleStopButton} className={stopButtonCls} disabled={isStopDisabled}>Stop</button>
         </div>

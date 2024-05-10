@@ -1,6 +1,7 @@
 /**
  * @jest-environment jsdom
  */
+import 'regenerator-runtime/runtime'
 import { fireEvent, render, screen } from "@testing-library/react";
 import { VoiceToy } from "./VoiceToy";
 
@@ -41,3 +42,5 @@ it("change state to stop when click stop button", () => {
   expect(getByText('Record')).toBeInTheDocument();
   expect(getByText('Stop')).toBeDisabled();
 });
+
+
