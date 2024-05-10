@@ -1,7 +1,14 @@
+
 export const metadata = {
-  title: "App Router",
+  title: "Voice Toy",
 };
+import { VoiceToy } from "./components/VoiceToy";
+
 
 export default function Page() {
-  return <h1>App Router</h1>;
+  return (
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+        <VoiceToy />
+    </main>
+  );
 }
