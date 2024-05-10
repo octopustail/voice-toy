@@ -3,7 +3,7 @@ import 'regenerator-runtime/runtime';
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-
+import { LanguageSelector } from '../LanguageSelector/LanguageSelector';
 import './VoiceToy.css'
 
 enum RecordState {
@@ -14,6 +14,7 @@ enum RecordState {
 
 export const VoiceToy: React.FC = () => {
     const [curState, setCurState] = useState<RecordState>(RecordState.Stop)
+    const [lang, setLang] = useState('en')
     const {
         transcript,
         listening,
@@ -33,7 +34,7 @@ export const VoiceToy: React.FC = () => {
         setCurState(RecordState.Recording)
         SpeechRecognition.startListening({
             continuous: true,
-            language: 'en-US'
+            language: lang,
         });
     }
 
@@ -55,16 +56,15 @@ export const VoiceToy: React.FC = () => {
         'bg-red-500': curState !== RecordState.Stop,
     });
 
-    const isStopDisabled = curState === RecordState.Stop
 
     return <div className='border border-gray-400 rounded-md w-3/4 h-full p-12'>
         <div className='border border-gray-400 rounded-md h-4/5 p-4'>
             {transcript}
         </div>
         <div className='flex justify-between mt-6'>
-            {listening ? 'listening' : 'nothing'}
+            <LanguageSelector onSelect={setLang} disabled={curState === RecordState.Recording}/>
             <button onClick={handleRecordButton} className={recordButtonCls}>{recordButtonText}</button>
-            <button onClick={handleStopButton} className={stopButtonCls} disabled={isStopDisabled}>Stop</button>
+            <button onClick={handleStopButton} className={stopButtonCls} disabled={curState === RecordState.Stop}>Stop</button>
         </div>
 
     </div>

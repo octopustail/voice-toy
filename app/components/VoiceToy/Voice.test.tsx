@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import 'regenerator-runtime/runtime'
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import { VoiceToy } from "./VoiceToy";
 
 it("click Record to start recording", () => {
