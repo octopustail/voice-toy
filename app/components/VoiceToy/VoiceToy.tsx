@@ -31,7 +31,7 @@ export const VoiceToy: React.FC = () => {
                 `Browser doesn't support speech recognition, using Chrome or Edge instead please.`
             );
         }
-    }, [])
+    }, [browserSupportsSpeechRecognition])
 
     const handleRecordButton = async () => {
         if (curState === RecordState.Stop) {
