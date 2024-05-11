@@ -22,12 +22,12 @@ export const LanguageSelector = ({ onSelect, disabled }: Prop) => {
 
   return (
     <select
-      className="block appearance-none bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+      className="block min-w-48 appearance-none bg-white border border-gray-400 hover:border-gray-500 px-4 py-1.5 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
       value={selectedLanguage}
       onChange={handleChange}
       disabled={disabled}
+      aria-label='Select language'
     >
-      <option value="">Select a language </option>
       {languages.map((language) => (
         <option key={language.code} value={language.code}>
           {language.name}

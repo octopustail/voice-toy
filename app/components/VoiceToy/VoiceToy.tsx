@@ -78,13 +78,23 @@ export const VoiceToy: React.FC = () => {
     return <div className='container'>
         <Toaster />
         <div className={transcriptCls}>
-            <WaveMotion show={curState === RecordState.Recording}/>
+            <WaveMotion show={listening} />
             {transcript}
         </div>
         <div className='buttons'>
             <LanguageSelector onSelect={setLang} disabled={curState === RecordState.Recording} />
-            <button onClick={handleRecordButton} className={recordButtonCls}>{recordButtonText}</button>
-            <button onClick={handleStopButton} className={stopButtonCls} disabled={curState === RecordState.Stop}>Stop</button>
+            <button
+                onClick={handleRecordButton}
+                className={recordButtonCls}
+                aria-label={`${recordButtonText} Button`}
+            >
+                {recordButtonText}</button>
+            <button
+                onClick={handleStopButton}
+                className={stopButtonCls}
+                disabled={curState === RecordState.Stop}
+                aria-label="Stop Button"
+            >Stop</button>
         </div>
     </div>
 }
