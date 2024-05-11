@@ -3,11 +3,11 @@ import 'regenerator-runtime/runtime';
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import { LanguageSelector } from '../LanguageSelector/LanguageSelector';
+import { LanguageSelector } from '@/components/LanguageSelector/LanguageSelector';
 import toast, { Toaster } from 'react-hot-toast';
 import './VoiceToy.css'
 
-import { WaveMotion } from '../WaveMotion/WaveMotion';
+import { WaveMotion } from '@/components/WaveMotion/WaveMotion';
 
 enum RecordState {
     Pause = 'pause',
@@ -26,7 +26,7 @@ export const VoiceToy: React.FC = () => {
     } = useSpeechRecognition();
 
     useEffect(() => {
-        if (browserSupportsSpeechRecognition) {
+        if (!browserSupportsSpeechRecognition) {
             toast.error(
                 `Browser doesn't support speech recognition, using Chrome or Edge instead please.`
             );
@@ -67,12 +67,18 @@ export const VoiceToy: React.FC = () => {
         'button-stop': curState !== RecordState.Stop,
     });
 
+    const transcriptCls = classNames({
+        transcript: true,
+        'recording-border': curState === RecordState.Recording,
+        'pause-border': curState === RecordState.Pause,
+    })
+
 
 
     return <div className='container'>
         <Toaster />
-        <div className='transcript'>
-            {/* <WaveMotion/> */}
+        <div className={transcriptCls}>
+            <WaveMotion show={curState === RecordState.Recording}/>
             {transcript}
         </div>
         <div className='buttons'>

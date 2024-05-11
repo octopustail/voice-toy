@@ -1,0 +1,53 @@
+.wave-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left: 0;
+  /* background: rebeccapurple; */
+  overflow: hidden;
+  opacity: 0;
+}
+
+.show {
+  opacity: 1;
+}
+
+.wave {
+  opacity: 0.4;
+  position: absolute;
+  width: 180%;
+  top: 80%;
+  left: 2px;
+  /* left: 10px; */
+  /* transform: translate(-50%, -50%); */
+  /* background-color: bisque; */
+  background: radial-gradient(circle, #a6d0c9, #846648);
+  aspect-ratio: 1;
+  border-radius: 33%;
+  transform-origin: 50% 48%;
+  animation: drift 4000ms  infinite linear;
+}
+
+.wave-three {
+  background: radial-gradient(circle, #dcebe2, #c3b8d7);
+  animation: drift 5000ms infinite linear;
+}
+
+.wave-two {
+  animation: drift 7000ms infinite linear;
+  opacity: .4;
+  background: radial-gradient(circle, #8abb9d, #346231);
+}
+
+@keyframes drift {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -3,16 +3,26 @@
   background: rgba(19, 35, 47, 0.9);
   box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
 }
+
 .transcript {
   @apply relative rounded-md h-4/5 p-4;
   border: 1px solid #a0b3b09e;
-  background-color: rgba(160, 179, 176, 0.25)
+  background-color: rgba(58, 69, 67, 0.25)
 }
+
+
+.recording-border {
+  box-shadow: 3px 0 10px 5px rgba(14, 243, 14, 0.3); 
+}
+.pause-border{
+  box-shadow: 3px 0 10px 5px rgba(255, 223, 16, 0.3); 
+}
+
 .buttons{
-  @apply flex justify-between mt-4
+  @apply flex justify-between mt-4 
 }
 .button {
-  @apply rounded-md py-1.5 px-4 mt-2 min-w-24;
+  @apply rounded-md py-1.5 px-4 mt-2 min-w-32;
   color: #fff;
 }
 
