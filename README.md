@@ -47,4 +47,4 @@ npm test
 Implement voice recognition by [https://www.npmjs.com/package/react-speech-recognition](https://www.npmjs.com/package/react-speech-recognition). 
 Reason for choose it:
 - Based on Web Speech Api.
-- Provide polyfill solution. Some browsers(firefox.) do not support [Web Speech Api](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#browser_compatibility).
+- Provide polyfill solution with [Speechly](https://github.com/speechly/speech-recognition-polyfill). Some browsers(firefox.) do not support [Web Speech Api](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#browser_compatibility).

@@ -1,10 +1,13 @@
 'use client'
 import 'regenerator-runtime/runtime';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { LanguageSelector } from '../LanguageSelector/LanguageSelector';
+import toast, { Toaster } from 'react-hot-toast';
 import './VoiceToy.css'
+
+import { WaveMotion } from '../WaveMotion/WaveMotion';
 
 enum RecordState {
     Pause = 'pause',
@@ -22,8 +25,16 @@ export const VoiceToy: React.FC = () => {
         browserSupportsSpeechRecognition
     } = useSpeechRecognition();
 
+    useEffect(() => {
+        if (browserSupportsSpeechRecognition) {
+            toast.error(
+                `Browser doesn't support speech recognition, using Chrome or Edge instead please.`
+            );
+        }
+    }, [])
+
     const handleRecordButton = async () => {
-        if(curState === RecordState.Stop){
+        if (curState === RecordState.Stop) {
             resetTranscript();
         }
         if (curState === RecordState.Recording) {
@@ -46,26 +57,28 @@ export const VoiceToy: React.FC = () => {
     const recordButtonText = curState === RecordState.Recording ? 'Pause' : 'Record';
     const recordButtonCls = classNames({
         button: true,
-        'bg-amber-500': curState === RecordState.Recording,
-        'bg-lime-400': curState !== RecordState.Recording,
+        'button-pause': curState === RecordState.Recording,
+        'button-recording': curState !== RecordState.Recording,
     });
 
     const stopButtonCls = classNames({
         button: true,
-        'bg-gray-500': curState === RecordState.Stop,
-        'bg-red-500': curState !== RecordState.Stop,
+        'button-stop__disabled': curState === RecordState.Stop,
+        'button-stop': curState !== RecordState.Stop,
     });
 
 
-    return <div className='border border-gray-400 rounded-md w-3/4 h-full p-12'>
-        <div className='border border-gray-400 rounded-md h-4/5 p-4'>
+
+    return <div className='container'>
+        <Toaster />
+        <div className='transcript'>
+            {/* <WaveMotion/> */}
             {transcript}
         </div>
-        <div className='flex justify-between mt-6'>
-            <LanguageSelector onSelect={setLang} disabled={curState === RecordState.Recording}/>
+        <div className='buttons'>
+            <LanguageSelector onSelect={setLang} disabled={curState === RecordState.Recording} />
             <button onClick={handleRecordButton} className={recordButtonCls}>{recordButtonText}</button>
             <button onClick={handleStopButton} className={stopButtonCls} disabled={curState === RecordState.Stop}>Stop</button>
         </div>
-
     </div>
 }

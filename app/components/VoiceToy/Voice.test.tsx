@@ -7,8 +7,10 @@ import { VoiceToy } from "./VoiceToy";
 
 it("click Record to start recording", () => {
   const { getByText } = render(<VoiceToy />);
-  expect(getByText('Record')).toBeInTheDocument();
-  expect(getByText('Stop')).toBeDisabled();
+
+
+    expect(getByText('Record')).toBeInTheDocument();
+    expect(getByText('Stop')).toBeDisabled();
 });
 
 

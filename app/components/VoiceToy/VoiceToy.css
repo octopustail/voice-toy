@@ -1,3 +1,56 @@
+.container {
+  @apply rounded-md w-1/2 h-3/4 p-12 flex flex-col min-w-60;
+  background: rgba(19, 35, 47, 0.9);
+  box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+.transcript {
+  @apply relative rounded-md h-4/5 p-4;
+  border: 1px solid #a0b3b09e;
+  background-color: rgba(160, 179, 176, 0.25)
+}
+.buttons{
+  @apply flex justify-between mt-4
+}
 .button {
-  @apply rounded-md py-1.5 px-4 w-48;
+  @apply rounded-md py-1.5 px-4 mt-2 min-w-24;
+  color: #fff;
+}
+
+.button-recording{
+  background-color: #1ab188;
+}
+
+.button-recording:hover{
+  background-color: #42c09e;
+}
+
+.button-stop{
+  background-color: #b11a1a;
+}
+
+.button-stop:hover{
+  background-color: #a73636;
+}
+
+
+.button-pause{
+  background-color: #b1721a;
+}
+
+.button-pause:hover{
+  background-color: #b18344;
+}
+
+.button-stop__disabled {
+  @apply bg-gray-500;
+  cursor: not-allowed;
+}
+
+@media screen and (max-width: 1023px) {
+  .container {
+    @apply w-3/4 p-8
+  }
+  .buttons{
+    @apply flex-col
+  }
 }
