@@ -79,7 +79,18 @@ export const VoiceToy: React.FC = () => {
         <Toaster />
         <div className={transcriptCls}>
             <WaveMotion show={listening} />
-            {transcript}
+            <span className='relative'>
+                {transcript ||
+                    <span className='text-slate-400'>
+                        🎤  Welcome to Voice Toy, record and recognize your speech. <br />
+                        <br />
+                        - Press `Record` to start.
+                        <br />
+                        - Press `Pause` to pause, Press `Record` to resume.
+                        <br />
+                        -  Press `Stop`, then press `Record` to start a new one.
+                    </span>}
+            </span>
         </div>
         <div className='buttons'>
             <LanguageSelector onSelect={setLang} disabled={curState === RecordState.Recording} />
